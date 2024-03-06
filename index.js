@@ -17,7 +17,6 @@ async function getArIds(pageNumber, limit) {
 async function getIds(pageNumber,limit) {
   try {
     let ar = await getArIds(pageNumber, limit);
-    console.log(ar)
     return ar;
   } catch (error) {
       console.error('Ошибка при выполнении запроса:', error);
@@ -52,7 +51,6 @@ async function getArItems(arIds) {
 
 async function getItems(arIds) {
   try {
-    console.log(arIds)
     let ar = await getArItems(arIds);
     return ar;
   } catch (error) {
@@ -104,7 +102,6 @@ async function filter(value, field) {
 async function filterItems(value,field) {
   try {
     let ar = await filter(value,field);
-    console.log(ar)
     return ar;
   } catch (error) {
       console.error('Ошибка при выполнении запроса:', error);
@@ -120,12 +117,9 @@ document.addEventListener('DOMContentLoaded', async function () {
   
   async function loadData() {
       let ar = await getIds();
-      console.log(ar)
       length = Array.from(ar).length
-      console.log(length)
       let result = [];
       result = await getItems(ar); 
-      console.log(result);
       const seen = new Set();
       const unique = result.filter(item => {
         const duplicate = seen.has(item.id);
@@ -138,7 +132,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
    function showPage(page) {
-      console.log(allFields);
       const startIndex = page * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
       const seen = new Set();
@@ -151,7 +144,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       const items = unique.slice(startIndex, endIndex);
      
       content.innerHTML = "";
-      console.log(items)
       items.forEach(item => {
           content.innerHTML += `<li>${item.id}, ${item.product}, ${item.price}, ${item.brand}</li>`;
       });
@@ -231,7 +223,6 @@ document.addEventListener('DOMContentLoaded', async function () {
           const pageButton = document.createElement('button');
           pageButton.textContent = i + 1;
           pageButton.addEventListener("click",  () => {
-              console.log("Page button clicked:", i);
               currentPage = i;
               updateActiveButtonStates();
                showPage(currentPage);
